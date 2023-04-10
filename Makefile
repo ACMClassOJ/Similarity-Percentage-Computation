@@ -402,12 +402,14 @@ $(BINDIR)/sim_8086$(EXE):	sim_8086$(EXE)
 
 # Clean-up
 
-.PHONY:		clean fresh
+.PHONY:		clean fresh sim_gen.c
 clean:
 		-rm -f *.o
 		-rm -f $(GARBAGE)
 		-rm -f *.aux *.log *.out
 		-rm -f a.out a.exe sim.txt core mon.out
+		-rm -f sim_gen.c
+		-rm -f $(BINARIES)
 
 fresh:		clean
 		-rm -f *.exe
