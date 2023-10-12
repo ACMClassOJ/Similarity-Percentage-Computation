@@ -1,0 +1,32 @@
+# bash completion for sim(1)     -*- shell script -*-
+
+_sim() {
+    local cur prev words cword comp_args was_split option_ends=false
+    _init_completion -s || return
+
+    for ((i = 1; i <= cword; i++)); do
+        if [[ ${words[i]} != -* ]]; then
+            option_ends=true
+            break
+        fi
+    done
+
+    if [[ $option_ends == false ]] && [[ $cur == -* ]]; then
+        # Complete options
+        if [[ "${words[0]}" == "sim_text" ]]; then
+            local text_options="-a -d -e -i -M -n -o -O -p -P -r -R -s -S -t -T -u -v -w --"
+            COMPREPLY=($(compgen -W "$text_options" -- "$cur"))
+        else
+            local options="-a -d -e -f -F -i -M -n -o -O -p -P -r -R -s -S -t -T -u -v -w --"
+            COMPREPLY=($(compgen -W "$options" -- "$cur"))
+        fi
+    else
+        if [[ "$prev" == '-r' ]] || [[ "$prev" == '-t' ]]; then
+            # This should be a number, so no completion
+            return
+        fi
+        # Normal files and directories completion
+        _filedir
+    fi
+} && complete -F _sim sim_c sim_text sim_c++ sim_java sim_pasc sim_m2 \
+  sim_lisp sim_mira sim_8086

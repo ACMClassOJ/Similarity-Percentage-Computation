@@ -1,0 +1,74 @@
+#compdef sim_c sim_c++ sim_java sim_pasc sim_m2 sim_lisp sim_mira sim_8086 sim_text
+
+# Note: Do not support the separators (`|` and `/`)!
+# Completing a single word separator is not considered necessary.
+
+local arguments=(
+  '-a[compare to all files]'
+  '-d[output in a diff-like format]'
+  '-e[compare each file to each file separately]'
+  '-f[function-like forms only]'
+  '-F[keep function identifiers in tact]'
+  '-i[use stdin as the list of files]'
+  '-M[show memory usage info at close-down]'
+  '-n[suppress the text of the runs]'
+  '-o[set the output file]:files:_files'
+  '-O[show command line options at start-up]'
+  '-p[output similarity in percentages]'
+  '-P[main contributing file to percentages only]'
+  '-r[set minimum run size]:value'
+  '-R[recurse into subdirectories]'
+  '-s[do not compare a file to itself]'
+  '-S[compare to old files only]'
+  '-t[threshold level of percentages (with -p option)]:number'
+  '-T[suppress reporting the input files]'
+  '-u[unbuffered, unsorted output]'
+  '-w[set page width]:value'
+  '--[prints the input as the similarity checker sees it]'
+  '*:files or directories:_files'
+)
+
+local text_arguments=(
+  '-a[compare to all files]'
+  '-d[output in a diff-like format]'
+  '-e[compare each file to each file separately]'
+  '-i[use stdin as the list of files]'
+  '-M[show memory usage info at close-down]'
+  '-n[suppress the text of the runs]'
+  '-o[set the output file]:files:_files'
+  '-O[show command line options at start-up]'
+  '-p[output similarity in percentages]'
+  '-P[main contributing file to percentages only]'
+  '-r[set minimum run size]:value'
+  '-R[recurse into subdirectories]'
+  '-s[do not compare a file to itself]'
+  '-S[compare to old files only]'
+  '-t[threshold level of percentages (with -p option)]:number'
+  '-T[suppress reporting the input files]'
+  '-u[unbuffered, unsorted output]'
+  '-w[set page width]:value'
+  '--[prints the input as the similarity checker sees it]'
+  '*:files or directories:_files'
+)
+
+local tmp option_ends=false number_of_words=${#words}
+
+for ((i = 2; i <= $number_of_words; i++)); do
+  tmp=${words[i]}
+  if [[ $tmp != -* ]] && [[ $tmp != '' ]]; then
+    option_ends=true
+    break
+  elif [[ $tmp == '-O' ]] || [[ $tmp == '-r' ]] || [[ $tmp == '-t' ]] || [[ $tmp == '-w' ]]; then
+    ((i++))
+  fi
+done
+
+if [[ $option_ends == false ]]; then
+  if [[ "${words[1]}" == "sim_text" ]]; then
+    _arguments $text_arguments
+  else
+    _arguments $arguments
+  fi
+else
+  _files
+fi
