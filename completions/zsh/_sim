@@ -51,9 +51,9 @@ local text_arguments=(
   '*:files or directories:_files'
 )
 
-local tmp option_ends=false number_of_words=${#words}
+local tmp option_ends=false
 
-for ((i = 2; i <= $number_of_words; i++)); do
+for ((i = 2; i < CURRENT; i++)); do
   tmp=${words[i]}
   if [[ $tmp != -* ]] && [[ $tmp != '' ]]; then
     option_ends=true
