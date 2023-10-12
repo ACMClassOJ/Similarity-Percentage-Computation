@@ -14,6 +14,7 @@ help:
 	@echo  'binaries:       create all binaries'
 	@echo  'exes:           create executables in MSDOS'
 	@echo  'install:        install all binaries'
+	@echo  'install_comp:   install the completion files'
 	@echo  ''
 	@echo  'view_man:       view sim.pdf'
 	@echo  'lint:           lint sim sources'
@@ -44,12 +45,14 @@ SUBSYSTEM =	LINUX
 DIR =		/usr
 BINDIR =	$(DIR)/bin
 MAN1DIR =	$(DIR)/share/man/man1
+BASH_COMP_DIR =	$(DIR)/share/bash-completion/completions
+ZSH_COMP_DIR =	$(DIR)/share/zsh/site-functions
 
 # Commands
 COPY =		cp -p
 EXE =		#
 LEX =		flex
-LN =		ln
+LN =		ln -s
 ZIP =		zip -o
 
 # File names
@@ -358,7 +361,8 @@ chklat:
 		chklat *.tex
 
 # Installation
-install_all:	install			# just a synonym
+.PHONY:	install_all install install_comp intall_zsh_comp install_bash_comp
+install_all:	install install_comp
 install:	$(MAN1DIR)/sim.1 \
 		$(BINDIR)/sim_c$(EXE) \
 		$(BINDIR)/sim_text$(EXE) \
@@ -369,6 +373,23 @@ install:	$(MAN1DIR)/sim.1 \
 		$(BINDIR)/sim_lisp$(EXE) \
 		$(BINDIR)/sim_mira$(EXE) \
 		$(BINDIR)/sim_8086$(EXE)
+
+install_comp:	install_zsh_comp install_bash_comp
+
+install_zsh_comp: completions/zsh/_sim
+	$(COPY) $< $(ZSH_COMP_DIR)/_sim
+
+install_bash_comp: completions/bash/sim
+	$(COPY) $< $(BASH_COMP_DIR)/sim
+	$(LN) sim $(BASH_COMP_DIR)/sim_c$(EXE)
+	$(LN) sim $(BASH_COMP_DIR)/sim_text$(EXE)
+	$(LN) sim $(BASH_COMP_DIR)/sim_c++$(EXE)
+	$(LN) sim $(BASH_COMP_DIR)/sim_java$(EXE)
+	$(LN) sim $(BASH_COMP_DIR)/sim_pasc$(EXE)
+	$(LN) sim $(BASH_COMP_DIR)/sim_m2$(EXE)
+	$(LN) sim $(BASH_COMP_DIR)/sim_lisp$(EXE)
+	$(LN) sim $(BASH_COMP_DIR)/sim_mira$(EXE)
+	$(LN) sim $(BASH_COMP_DIR)/sim_8086$(EXE)
 
 $(MAN1DIR)/sim.1:	sim.1
 		$(COPY) sim.1 $@
