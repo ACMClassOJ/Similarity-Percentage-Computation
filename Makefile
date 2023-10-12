@@ -49,7 +49,7 @@ BASH_COMP_DIR =	$(DIR)/share/bash-completion/completions
 ZSH_COMP_DIR =	$(DIR)/share/zsh/site-functions
 
 # Commands
-COPY =		cp -p
+INSTALL =	install
 EXE =		#
 LEX =		flex
 LN =		ln -s
@@ -377,10 +377,10 @@ install:	$(MAN1DIR)/sim.1 \
 install_comp:	install_zsh_comp install_bash_comp
 
 install_zsh_comp: completions/zsh/_sim
-	$(COPY) $< $(ZSH_COMP_DIR)/_sim
+	$(INSTALL) -Dm644 $< $(ZSH_COMP_DIR)/_sim
 
 install_bash_comp: completions/bash/sim
-	$(COPY) $< $(BASH_COMP_DIR)/sim
+	$(INSTALL) -Dm644 $< $(BASH_COMP_DIR)/sim
 	$(LN) sim $(BASH_COMP_DIR)/sim_c$(EXE)
 	$(LN) sim $(BASH_COMP_DIR)/sim_text$(EXE)
 	$(LN) sim $(BASH_COMP_DIR)/sim_c++$(EXE)
@@ -392,34 +392,34 @@ install_bash_comp: completions/bash/sim
 	$(LN) sim $(BASH_COMP_DIR)/sim_8086$(EXE)
 
 $(MAN1DIR)/sim.1:	sim.1
-		$(COPY) sim.1 $@
+		$(INSTALL) -Dm755 sim.1 $@
 
 $(BINDIR)/sim_c$(EXE):	sim_c$(EXE)
-		$(COPY) sim_c$(EXE) $@
+		$(INSTALL) -Dm755 sim_c$(EXE) $@
 
 $(BINDIR)/sim_text$(EXE):	sim_text$(EXE)
-		$(COPY) sim_text$(EXE) $@
+		$(INSTALL) -Dm755 sim_text$(EXE) $@
 
 $(BINDIR)/sim_c++$(EXE):	sim_c++$(EXE)
-		$(COPY) sim_c++$(EXE) $@
+		$(INSTALL) -Dm755 sim_c++$(EXE) $@
 
 $(BINDIR)/sim_java$(EXE):	sim_java$(EXE)
-		$(COPY) sim_java$(EXE) $@
+		$(INSTALL) -Dm755 sim_java$(EXE) $@
 
 $(BINDIR)/sim_pasc$(EXE):	sim_pasc$(EXE)
-		$(COPY) sim_pasc$(EXE) $@
+		$(INSTALL) -Dm755 sim_pasc$(EXE) $@
 
 $(BINDIR)/sim_m2$(EXE):	sim_m2$(EXE)
-		$(COPY) sim_m2$(EXE) $@
+		$(INSTALL) -Dm755 sim_m2$(EXE) $@
 
 $(BINDIR)/sim_lisp$(EXE):	sim_lisp$(EXE)
-		$(COPY) sim_lisp$(EXE) $@
+		$(INSTALL) -Dm755 sim_lisp$(EXE) $@
 
 $(BINDIR)/sim_mira$(EXE):	sim_mira$(EXE)
-		$(COPY) sim_mira$(EXE) $@
+		$(INSTALL) -Dm755 sim_mira$(EXE) $@
 
 $(BINDIR)/sim_8086$(EXE):	sim_8086$(EXE)
-		$(COPY) sim_8086$(EXE) $@
+		$(INSTALL) -Dm755 sim_8086$(EXE) $@
 
 # Clean-up
 
