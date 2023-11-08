@@ -15,6 +15,7 @@ help:
 	@echo  'exes:           create executables in MSDOS'
 	@echo  'install:        install all binaries'
 	@echo  'install_comp:   install the completion files'
+	@echo  'install_all:    install all files (binaries and completion files)'
 	@echo  ''
 	@echo  'view_man:       view sim.pdf'
 	@echo  'lint:           lint sim sources'
