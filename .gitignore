@@ -1,3 +1,7 @@
 *.o
 sim_*
 Similarity_Percentage_Computation.pdf
+
+# Clang tooling
+.cache/
+compile_commands.json
