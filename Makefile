@@ -82,14 +82,14 @@ GROFF =		man2pdf
 
 # Compiling
 MEMORY =	-DMEMCHECK -DMEMCLOBBER
-CFLAGS =	$(VERSION) $(MEMORY) -O4 # -Dlint -DLIB # for all db active
+CFLAGS +=	$(VERSION) $(MEMORY) # -Dlint -DLIB # for all db active
 LIBFLAGS =	#
 LINTFLAGS =	-Dlint_test $(MEMORY) -h# -X
 LOADFLAGS =	-s#			# strip symbol table
-LOADER =	$(CC) $(LOADFLAGS)
+LOADER =	$(CC) $(LDFLAGS) $(LOADFLAGS)
 
 # Debugging
-CFLAGS +=	-DDEBUG
+#CFLAGS +=	-DDEBUG
 
 #	T E S T   P A R A M E T E R S
 
