@@ -10,6 +10,7 @@
 	Date:	2017-04-16
 */
 
+#include	"sim.h"
 #include	"options.h"
 #include	"token.h"
 #include	"properties.h"

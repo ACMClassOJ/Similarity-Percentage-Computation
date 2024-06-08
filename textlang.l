@@ -11,6 +11,7 @@
 */
 
 #include	"sim.h"
+#include	"options.h"
 #include	"token.h"
 #include	"idf.h"
 
