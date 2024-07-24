@@ -1,6 +1,7 @@
 *.o
 sim_*
 Similarity_Percentage_Computation.pdf
+stream.res
 
 # Clang tooling
 .cache/
