@@ -246,16 +246,14 @@ PROP_HDR =	properties.h
 #	entry point:	sim_gen$(EXE)
 #	makes:		sim_$(GEN_LANG)$(EXE)
 
-sim_gen.c:	$(GEN_LANG)lang.l
-		$(LEX) -t $(GEN_LANG)lang.l >sim_gen.c
+sim_gen_$(GEN_LANG).c:	$(GEN_LANG)lang.l
+		$(LEX) -t $(GEN_LANG)lang.l > $@
 
-SIM_GEN_SRC =	$(SIM_SRC) $(PROP_SRC) sim_gen.c
-SIM_GEN_OBJ =	$(SIM_OBJ) $(PROP_OBJ) sim_gen.o
+SIM_GEN_SRC =	$(SIM_SRC) $(PROP_SRC) sim_gen_$(GEN_LANG).c
+SIM_GEN_OBJ =	$(SIM_OBJ) $(PROP_OBJ) sim_gen_$(GEN_LANG).o
 
 sim_gen$(EXE):	$(SIM_GEN_OBJ)
-		$(LOADER) $(SIM_GEN_OBJ) -o $@
-		mv sim_gen$(EXE) sim_$(GEN_LANG)$(EXE)
-		rm -f sim_gen.[co]
+		$(LOADER) $(SIM_GEN_OBJ) -o sim_$(GEN_LANG)$(EXE)
 
 # The executables:				# using recursive make
 
