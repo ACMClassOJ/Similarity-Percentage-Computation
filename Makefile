@@ -71,6 +71,23 @@ SHOW_PDF =	pdfview
 GROFF =		groff -man
 GROFF =		man2pdf
 
+ifeq ($(shell uname),Darwin)
+	# Mac OS X
+	INSTALL = install -d
+else ifeq ($(shell uname), Linux)
+	INSTALL = install -D
+else ifeq ($(shell uname),GNU)
+	# Debian GNU Hurd
+	INSTALL = install -D
+else ifeq ($(shell uname),GNU/kFreeBSD)
+	# Debian kFreeBSD
+	INSTALL = install -d
+else ifeq ($(shell uname),FreeBSD)
+	INSTALL = install -d
+else ifeq ($(shell uname),NetBSD)
+	INSTALL = install -d
+endif
+
 .SUFFIXES:	.1 .3 .pdf
 
 .1.pdf:
@@ -260,31 +277,31 @@ sim_gen$(EXE):	$(SIM_GEN_OBJ)
 LEX_HDR:	options.h token.h properties.h idf.h lex.h lang.h
 
 sim_c$(EXE):	$(SIM_SRC) $(PROP_SRC) clang.l $(LEX_HDR)
-		make GEN_LANG=c sim_gen$(EXE)
+		$(MAKE) GEN_LANG=c sim_gen$(EXE)
 
 sim_text$(EXE):	$(SIM_SRC) $(PROP_SRC) textlang.l $(LEX_HDR)
-		make GEN_LANG=text sim_gen$(EXE)
+		$(MAKE) GEN_LANG=text sim_gen$(EXE)
 
 sim_c++$(EXE):	$(SIM_SRC) $(PROP_SRC) c++lang.l $(LEX_HDR)
-		make GEN_LANG=c++ sim_gen$(EXE)
+		$(MAKE) GEN_LANG=c++ sim_gen$(EXE)
 
 sim_java$(EXE):	$(SIM_SRC) $(PROP_SRC) javalang.l $(LEX_HDR)
-		make GEN_LANG=java sim_gen$(EXE)
+		$(MAKE) GEN_LANG=java sim_gen$(EXE)
 
 sim_pasc$(EXE):	$(SIM_SRC) $(PROP_SRC) pasclang.l $(LEX_HDR)
-		make GEN_LANG=pasc sim_gen$(EXE)
+		$(MAKE) GEN_LANG=pasc sim_gen$(EXE)
 
 sim_m2$(EXE):	$(SIM_SRC) $(PROP_SRC) m2lang.l $(LEX_HDR)
-		make GEN_LANG=m2 sim_gen$(EXE)
+		$(MAKE) GEN_LANG=m2 sim_gen$(EXE)
 
 sim_lisp$(EXE):	$(SIM_SRC) $(PROP_SRC) lisplang.l $(LEX_HDR)
-		make GEN_LANG=lisp sim_gen$(EXE)
+		$(MAKE) GEN_LANG=lisp sim_gen$(EXE)
 
 sim_mira$(EXE):	$(SIM_SRC) $(PROP_SRC) miralang.l $(LEX_HDR)
-		make GEN_LANG=mira sim_gen$(EXE)
+		$(MAKE) GEN_LANG=mira sim_gen$(EXE)
 
 sim_8086$(EXE):	$(SIM_SRC) $(PROP_SRC) 8086lang.l $(LEX_HDR)
-		make GEN_LANG=8086 sim_gen$(EXE)
+		$(MAKE) GEN_LANG=8086 sim_gen$(EXE)
 
 
 
@@ -376,10 +393,10 @@ install:	$(MAN1DIR)/sim.1 \
 install_comp:	install_zsh_comp install_bash_comp
 
 install_zsh_comp: completions/zsh/_sim
-	$(INSTALL) -Dm644 $< $(ZSH_COMP_DIR)/_sim
+	$(INSTALL) -m 644 $< $(ZSH_COMP_DIR)/_sim
 
 install_bash_comp: completions/bash/sim
-	$(INSTALL) -Dm644 $< $(BASH_COMP_DIR)/sim
+	$(INSTALL) -m 644 $< $(BASH_COMP_DIR)/sim
 	$(LN) sim $(BASH_COMP_DIR)/sim_c$(EXE)
 	$(LN) sim $(BASH_COMP_DIR)/sim_text$(EXE)
 	$(LN) sim $(BASH_COMP_DIR)/sim_c++$(EXE)
@@ -391,38 +408,38 @@ install_bash_comp: completions/bash/sim
 	$(LN) sim $(BASH_COMP_DIR)/sim_8086$(EXE)
 
 $(MAN1DIR)/sim.1:	sim.1
-		$(INSTALL) -Dm755 sim.1 $@
+		$(INSTALL) -m 755 sim.1 $@
 
 $(BINDIR)/sim_c$(EXE):	sim_c$(EXE)
-		$(INSTALL) -Dm755 sim_c$(EXE) $@
+		$(INSTALL) -m 755 sim_c$(EXE) $@
 
 $(BINDIR)/sim_text$(EXE):	sim_text$(EXE)
-		$(INSTALL) -Dm755 sim_text$(EXE) $@
+		$(INSTALL) -m 755 sim_text$(EXE) $@
 
 $(BINDIR)/sim_c++$(EXE):	sim_c++$(EXE)
-		$(INSTALL) -Dm755 sim_c++$(EXE) $@
+		$(INSTALL) -m 755 sim_c++$(EXE) $@
 
 $(BINDIR)/sim_java$(EXE):	sim_java$(EXE)
-		$(INSTALL) -Dm755 sim_java$(EXE) $@
+		$(INSTALL) -m 755 sim_java$(EXE) $@
 
 $(BINDIR)/sim_pasc$(EXE):	sim_pasc$(EXE)
-		$(INSTALL) -Dm755 sim_pasc$(EXE) $@
+		$(INSTALL) -m 755 sim_pasc$(EXE) $@
 
 $(BINDIR)/sim_m2$(EXE):	sim_m2$(EXE)
-		$(INSTALL) -Dm755 sim_m2$(EXE) $@
+		$(INSTALL) -m 755 sim_m2$(EXE) $@
 
 $(BINDIR)/sim_lisp$(EXE):	sim_lisp$(EXE)
-		$(INSTALL) -Dm755 sim_lisp$(EXE) $@
+		$(INSTALL) -m 755 sim_lisp$(EXE) $@
 
 $(BINDIR)/sim_mira$(EXE):	sim_mira$(EXE)
-		$(INSTALL) -Dm755 sim_mira$(EXE) $@
+		$(INSTALL) -m 755 sim_mira$(EXE) $@
 
 $(BINDIR)/sim_8086$(EXE):	sim_8086$(EXE)
-		$(INSTALL) -Dm755 sim_8086$(EXE) $@
+		$(INSTALL) -m 755 sim_8086$(EXE) $@
 
 # Clean-up
 
-.PHONY:		clean fresh sim_gen.c
+.PHONY:		clean fresh
 clean:
 		-rm -f *.o
 		-rm -f $(GARBAGE)
